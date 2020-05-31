@@ -141,4 +141,21 @@ public class User {
         result = 31 * result + (rating != null ? rating.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", number=" + number +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", title='" + title + '\'' +
+                ", pictureUrl='" + pictureUrl + '\'' +
+                ", description='" + description + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", followers='" + followers + '\'' +
+                ", rating=" + rating +
+                '}';
+    }
 }
