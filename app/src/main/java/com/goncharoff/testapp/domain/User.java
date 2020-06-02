@@ -12,7 +12,7 @@ public class User {
     private String phone;
     private String email;
     private String followers;
-    private Long rating;
+    private long rating;
 
     public long getId() {
         return id;
@@ -102,43 +102,21 @@ public class User {
         this.rating = rating;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        User user = (User) o;
-
-        if (id != user.id) return false;
-        if (number != user.number) return false;
-        if (name != null ? !name.equals(user.name) : user.name != null) return false;
-        if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null)
-            return false;
-        if (title != null ? !title.equals(user.title) : user.title != null) return false;
-        if (pictureUrl != null ? !pictureUrl.equals(user.pictureUrl) : user.pictureUrl != null)
-            return false;
-        if (description != null ? !description.equals(user.description) : user.description != null)
-            return false;
-        if (phone != null ? !phone.equals(user.phone) : user.phone != null) return false;
-        if (email != null ? !email.equals(user.email) : user.email != null) return false;
-        if (followers != null ? !followers.equals(user.followers) : user.followers != null)
-            return false;
-        return rating != null ? rating.equals(user.rating) : user.rating == null;
-    }
 
     @Override
-    public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (int) (number ^ (number >>> 32));
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (pictureUrl != null ? pictureUrl.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (phone != null ? phone.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (followers != null ? followers.hashCode() : 0);
-        result = 31 * result + (rating != null ? rating.hashCode() : 0);
-        return result;
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", number=" + number +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", title='" + title + '\'' +
+                ", pictureUrl='" + pictureUrl + '\'' +
+                ", description='" + description + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", followers='" + followers + '\'' +
+                ", rating=" + rating +
+                '}';
     }
 }

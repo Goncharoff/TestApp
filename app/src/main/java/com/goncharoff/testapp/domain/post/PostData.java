@@ -5,7 +5,7 @@ import java.util.Set;
 public class PostData {
 
     private long dateUpdated;
-    private Set<Photo> photos;
+    private Set<String> photos;
     private Set<Post> posts;
     private Set<PostAction> postActions;
     private Set<PostQuote> postQuotes;
@@ -19,11 +19,11 @@ public class PostData {
         this.dateUpdated = dateUpdated;
     }
 
-    public Set<Photo> getPhotos() {
+    public Set<String> getPhotos() {
         return photos;
     }
 
-    public void setPhotos(Set<Photo> photos) {
+    public void setPhotos(Set<String> photos) {
         this.photos = photos;
     }
 
@@ -57,5 +57,17 @@ public class PostData {
 
     public void setShowFromDate(long showFromDate) {
         this.showFromDate = showFromDate;
+    }
+
+    @Override
+    public String toString() {
+        return "PostData{" +
+                "dateUpdated=" + dateUpdated +
+                ", photos=" + photos +
+                ", posts=" + posts +
+                ", postActions=" + postActions +
+                ", postQuotes=" + postQuotes +
+                ", showFromDate=" + showFromDate +
+                '}';
     }
 }
