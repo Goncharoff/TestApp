@@ -3,11 +3,9 @@ package com.goncharoff.testapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
-
-import com.goncharoff.testapp.repository.UserRepository;
 
 public class MainActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
