@@ -1,12 +1,16 @@
 package com.goncharoff.testapp.domain;
 
+import com.google.gson.annotations.SerializedName;
+
 public class User {
 
     private long id;
     private long number;
     private String name;
+    @SerializedName("last_name")
     private String lastName;
     private String title;
+    @SerializedName("picture")
     private String pictureUrl;
     private String description;
     private String phone;
