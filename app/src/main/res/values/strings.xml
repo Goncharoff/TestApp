@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">TestApp</string>
+    <string name="call_me">Call me:</string>
+    <string name="email_me">Email me:</string>
+    <string name="followers">FOLLOWERS</string>
+    <string name="rating">RATING</string>
 </resources>
