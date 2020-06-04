@@ -1,9 +1,14 @@
-package com.goncharoff.testapp.domain.post;
+package com.goncharoff.testapp.domain.json_objects.post;
+
+import com.google.gson.annotations.SerializedName;
 
 public class PostQuote {
     private long id;
+    @SerializedName("quote_1")
     private String firstQuote;
+    @SerializedName("quote_2")
     private String secondQuote;
+    @SerializedName("date_created")
     private long dateCreated;
 
     public long getId() {

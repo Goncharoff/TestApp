@@ -1,16 +1,52 @@
-package com.goncharoff.testapp.domain.post;
+package com.goncharoff.testapp.domain.json_objects.post;
 
-public class Post {
+import com.google.gson.annotations.SerializedName;
+
+public class PostJson {
 
     private long id;
+    @SerializedName("image")
     private String imageUrl;
     private String text;
+    @SerializedName("date_created")
     private long dateCreated;
 
-    public Post(long id, String imageUrl, String text, long dateCreated) {
+    public PostJson(long id, String imageUrl, String text, long dateCreated) {
         this.id = id;
         this.imageUrl = imageUrl;
         this.text = text;
+        this.dateCreated = dateCreated;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public long getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(long dateCreated) {
         this.dateCreated = dateCreated;
     }
 
@@ -19,7 +55,7 @@ public class Post {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Post post = (Post) o;
+        PostJson post = (PostJson) o;
 
         if (id != post.id) return false;
         if (dateCreated != post.dateCreated) return false;
@@ -36,4 +72,6 @@ public class Post {
         result = 31 * result + (int) (dateCreated ^ (dateCreated >>> 32));
         return result;
     }
+
+
 }

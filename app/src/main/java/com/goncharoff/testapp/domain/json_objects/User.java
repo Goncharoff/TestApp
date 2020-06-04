@@ -1,4 +1,4 @@
-package com.goncharoff.testapp.domain;
+package com.goncharoff.testapp.domain.json_objects;
 
 import com.google.gson.annotations.SerializedName;
 

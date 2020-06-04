@@ -1,12 +1,17 @@
-package com.goncharoff.testapp.domain.post;
+package com.goncharoff.testapp.domain.json_objects.post;
+
+import com.google.gson.annotations.SerializedName;
 
 public class PostAction {
 
     private long id;
     private String title;
+    @SerializedName("btn_name")
     private String buttonName;
+    @SerializedName("action_type")
     private ActionType actionType;
     private String target;
+    @SerializedName("date_created")
     private long dateCreated;
 
     public long getId() {
