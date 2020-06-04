@@ -1,11 +1,12 @@
 package com.goncharoff.testapp.domain.post;
 
+import java.util.List;
 import java.util.Set;
 
 public class PostData {
 
     private long dateUpdated;
-    private Set<String> photos;
+    private List<String> photos;
     private Set<Post> posts;
     private Set<PostAction> postActions;
     private Set<PostQuote> postQuotes;
@@ -19,11 +20,11 @@ public class PostData {
         this.dateUpdated = dateUpdated;
     }
 
-    public Set<String> getPhotos() {
+    public List<String> getPhotos() {
         return photos;
     }
 
-    public void setPhotos(Set<String> photos) {
+    public void setPhotos(List<String> photos) {
         this.photos = photos;
     }
 

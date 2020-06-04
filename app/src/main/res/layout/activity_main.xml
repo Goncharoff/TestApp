@@ -139,24 +139,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <GridView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/photosGridView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
         android:layout_marginTop="420dp"
-        android:columnWidth="70dp"
         android:gravity="center"
-        android:numColumns="1"
         android:scrollbars="horizontal"
-        android:stretchMode="columnWidth"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/photosHolder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </GridView>
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
