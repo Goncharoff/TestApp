@@ -26,12 +26,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:textColor="@color/nameColor"
-            app:layout_constraintStart_toEndOf="@+id/avatar"
-            app:layout_constraintTop_toTopOf="@+id/avatar"
             android:fontFamily="sans-serif-medium"
+            android:textAlignment="textStart"
+            android:textColor="@color/nameColor"
             android:textSize="24sp"
-            android:textAlignment="textStart"/>
+            app:layout_constraintStart_toEndOf="@+id/avatar"
+            app:layout_constraintTop_toTopOf="@+id/avatar" />
 
         <TextView
             android:id="@+id/professionText"
@@ -39,12 +39,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="2dp"
-            android:textColor="@color/professionNameColor"
-            app:layout_constraintStart_toEndOf="@+id/avatar"
-            app:layout_constraintTop_toBottomOf="@+id/name"
             android:fontFamily="sans-serif"
+            android:textAlignment="textStart"
+            android:textColor="@color/professionNameColor"
             android:textSize="18sp"
-            android:textAlignment="textStart"/>
+            app:layout_constraintStart_toEndOf="@+id/avatar"
+            app:layout_constraintTop_toBottomOf="@+id/name" />
 
         <TextView
             android:id="@+id/numberOfSubs"
@@ -52,21 +52,22 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="12dp"
-            android:textColor="@color/numberOfSubsColor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/surround_oval"
             android:fontFamily="sans-serif-light"
             android:textAlignment="center"
-            android:background="@drawable/surround_oval"
-            />
+            android:textColor="@color/numberOfSubsColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="102dp"
             android:layout_marginEnd="16dp"
+            android:fontFamily="sans-serif"
+            android:textAlignment="textStart"
             android:textColor="@color/descriptionTextColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
