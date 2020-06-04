@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.goncharoff.testapp.adapter.PhotosAdapter;
+import com.goncharoff.testapp.adapter.PostAdapter;
+import com.goncharoff.testapp.repository.UserRepository;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,12 +30,15 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView photosRecyclerView;
 
+    private RecyclerView postsRecyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
         initViewsContent();
+        UserRepository.getINSTANCE().getFilteredAndOrderedPosts();
     }
 
     @Override
@@ -59,7 +64,11 @@ public class MainActivity extends AppCompatActivity {
         email = findViewById(R.id.emailAddress);
         subsNumber = findViewById(R.id.subsNumber);
         rating = findViewById(R.id.rating);
+
         photosRecyclerView = findViewById(R.id.photosGridView);
+
+        postsRecyclerView = findViewById(R.id.posts);
+
     }
 
     private void initViewsContent() {
@@ -77,5 +86,9 @@ public class MainActivity extends AppCompatActivity {
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         photosRecyclerView.setLayoutManager(layoutManager);
         photosRecyclerView.setAdapter(new PhotosAdapter(this, getProfileViewModel().getPostData().getPhotos()));
+
+        LinearLayoutManager postsLayoutManager = new LinearLayoutManager(this);
+        postsRecyclerView.setLayoutManager(postsLayoutManager);
+        postsRecyclerView.setAdapter(new PostAdapter(this, UserRepository.getINSTANCE().getFilteredAndOrderedPosts()));
     }
 }

@@ -1,15 +1,19 @@
-package com.goncharoff.testapp.domain.post;
+package com.goncharoff.testapp.domain.json_objects.post;
+
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
-import java.util.Set;
 
 public class PostData {
 
     private long dateUpdated;
     private List<String> photos;
-    private Set<Post> posts;
-    private Set<PostAction> postActions;
-    private Set<PostQuote> postQuotes;
+    private List<PostJson> posts;
+    @SerializedName("posts_actions")
+    private List<PostAction> postActions;
+    @SerializedName("posts_quotes")
+    private List<PostQuote> postQuotes;
+    @SerializedName("show_from_date")
     private long showFromDate;
 
     public long getDateUpdated() {
@@ -28,27 +32,27 @@ public class PostData {
         this.photos = photos;
     }
 
-    public Set<Post> getPosts() {
+    public List<PostJson> getPosts() {
         return posts;
     }
 
-    public void setPosts(Set<Post> posts) {
+    public void setPosts(List<PostJson> posts) {
         this.posts = posts;
     }
 
-    public Set<PostAction> getPostActions() {
+    public List<PostAction> getPostActions() {
         return postActions;
     }
 
-    public void setPostActions(Set<PostAction> postActions) {
+    public void setPostActions(List<PostAction> postActions) {
         this.postActions = postActions;
     }
 
-    public Set<PostQuote> getPostQuotes() {
+    public List<PostQuote> getPostQuotes() {
         return postQuotes;
     }
 
-    public void setPostQuotes(Set<PostQuote> postQuotes) {
+    public void setPostQuotes(List<PostQuote> postQuotes) {
         this.postQuotes = postQuotes;
     }
 
