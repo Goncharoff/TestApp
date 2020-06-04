@@ -50,11 +50,15 @@
             android:id="@+id/numberOfSubs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="12dp"
             android:textColor="@color/numberOfSubsColor"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:fontFamily="sans-serif-light"
+            android:textAlignment="center"
+            android:background="@drawable/surround_oval"
+            />
 
         <TextView
             android:id="@+id/description"
