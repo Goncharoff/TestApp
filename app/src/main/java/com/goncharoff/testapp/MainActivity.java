@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.goncharoff.testapp.adapter.PhotosAdapter;
 import com.goncharoff.testapp.adapter.PostAdapter;
 import com.goncharoff.testapp.repository.UserRepository;
@@ -72,7 +73,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViewsContent() {
-        Glide.with(this).load(getProfileViewModel().getUserData().getPictureUrl()).into(avatar);
+        Glide.with(this).load(getProfileViewModel().getUserData().getPictureUrl())
+                .apply(RequestOptions.circleCropTransform())
+                .into(avatar);
+
         name.setText(getString(R.string.name, getProfileViewModel().getUserData().getName(), getProfileViewModel().getUserData().getLastName()));
         professionText.setText(getProfileViewModel().getUserData().getTitle());
         numberOfSubs.setText(String.valueOf(getProfileViewModel().getUserData().getNumber()));
