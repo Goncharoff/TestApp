@@ -19,6 +19,7 @@
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:background="@drawable/quote_oval"
         app:layout_constraintEnd_toStartOf="@+id/firstQuoteFrame"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,12 +29,12 @@
             android:id="@+id/firstQuote"
             android:layout_width="128dp"
             android:layout_height="wrap_content"
-            android:paddingStart="3dp"
-            android:paddingEnd="3dp"
-            android:paddingTop="1dp"
-            android:paddingBottom="1dp"
             android:fontFamily="sans-serif-medium"
             android:gravity="center"
+            android:paddingStart="3dp"
+            android:paddingTop="1dp"
+            android:paddingEnd="3dp"
+            android:paddingBottom="1dp"
             android:textColor="@android:color/black" />
     </FrameLayout>
 
@@ -41,6 +42,7 @@
         android:id="@+id/firstQuoteFrame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:background="@drawable/quote_oval"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.729"
@@ -53,12 +55,12 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
             android:gravity="center"
-            android:textAlignment="center"
-            android:textColor="@android:color/black"
             android:paddingStart="3dp"
-            android:paddingEnd="3dp"
             android:paddingTop="1dp"
-            android:paddingBottom="1dp"/>
+            android:paddingEnd="3dp"
+            android:paddingBottom="1dp"
+            android:textAlignment="center"
+            android:textColor="@android:color/black" />
 
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
