@@ -12,6 +12,7 @@
    5. cardview:1.0.0
    
  Known issues: 
+      
       1. Layout of view is meh.
       2. Too much inheritance in layouts.
       3. Views should be split on fragments.
@@ -20,11 +21,12 @@
       6. View model useless
       7. Only portrait mode.
       8. Shapes should be replaced with cardview.
-      9. Didn't sign certificate, should add pro-guard rules
+      9. Didn't sign certificate, should add pro-guard rules, should add gitignore rules
       10. Should replace some logic from MainActivity
       
  Time-tracking:
-    architecture ~ 1h
-    back logic ~ 4h
-    views ~ 12h
-    refactoring ~ 1h
+    
+    * architecture ~ 1h
+    * back logic ~ 4h
+    * views ~ 12h
+    * refactoring ~ 1h
