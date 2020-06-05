@@ -1,18 +1,221 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".view.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:context=".view.MainActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/avatar"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="14dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="sans-serif-medium"
+            android:textAlignment="textStart"
+            android:textColor="@color/nameColor"
+            android:textSize="24sp"
+            app:layout_constraintStart_toEndOf="@+id/avatar"
+            app:layout_constraintTop_toTopOf="@+id/avatar" />
+
+        <TextView
+            android:id="@+id/professionText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="2dp"
+            android:fontFamily="sans-serif"
+            android:textAlignment="textStart"
+            android:textColor="@color/professionNameColor"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/avatar"
+            app:layout_constraintTop_toBottomOf="@+id/name" />
+
+        <TextView
+            android:id="@+id/numberOfSubs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/surround_oval"
+            android:fontFamily="sans-serif-light"
+            android:textAlignment="center"
+            android:textColor="@color/numberOfSubsColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="102dp"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/descriptionTextColor"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="26dp"
+            android:text="@string/call_me"
+            android:textColor="@color/numberOfSubsColor"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description" />
+
+        <TextView
+            android:id="@+id/phoneNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/mailPhoneLinkColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/email_me"
+            android:textColor="@color/numberOfSubsColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/phoneNumber" />
+
+        <TextView
+            android:id="@+id/emailAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="2dp"
+            android:autoLink="email"
+            android:textColor="@color/mailPhoneLinkColor"
+            android:textColorLink="@color/mailPhoneLinkColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/stats_oval"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/emailAddress">
+
+            <TextView
+                android:id="@+id/folowersTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/followers"
+                android:textColor="@color/numberOfSubsColor" />
+
+            <TextView
+                android:id="@+id/subsNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/folowersTV"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="1dp"
+                android:textColor="@color/professionNameColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/stats_oval"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/relativeLayout"
+            app:layout_constraintTop_toBottomOf="@+id/emailAddress">
+
+            <TextView
+                android:id="@+id/raitingTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rating"
+                android:textColor="@color/numberOfSubsColor" />
+
+            <TextView
+                android:id="@+id/rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/raitingTV"
+                android:gravity="center"
+                android:textColor="@color/professionNameColor" />
+
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/photosGridView"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="40dp"
+            android:gravity="center"
+            android:scrollbars="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
+
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="24dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/posts"
+            android:textColor="@color/postsTextColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/photosGridView" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/posts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="16dp"
+            android:nestedScrollingEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
