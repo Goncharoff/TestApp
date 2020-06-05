@@ -3,6 +3,7 @@ package com.goncharoff.testapp.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.goncharoff.testapp.domain.json_objects.post.PostAction;
 import com.goncharoff.testapp.domain.json_objects.post.PostJson;
 import com.goncharoff.testapp.domain.json_objects.post.PostQuote;
 import com.goncharoff.testapp.repository.UserRepository;
+
 
 import java.util.Date;
 import java.util.List;
@@ -117,7 +119,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
         void bindView(long dateCreated, String imageUrl, String inputPostMessage) {
-            postDateCreated.setText(new Date(dateCreated).toString());
+            postDateCreated.setText(DateFormat.format("hh:mm, dd MMM yyyy", new Date(dateCreated)));
             Glide.with(context).load(imageUrl).into(postImage);
             postMessage.setText(inputPostMessage);
         }
@@ -170,7 +172,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
         void bindView(long dateCreated, String firstQuote, String secondQuote) {
-            dateCreatedTextView.setText(new Date(dateCreated).toString());
+            dateCreatedTextView.setText(DateFormat.format("hh:mm, dd MMM yyyy", new Date(dateCreated)));
             firstQuoteTextView.setText(firstQuote);
             secondQuoteTextView.setText(secondQuote);
         }
