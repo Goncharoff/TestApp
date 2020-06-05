@@ -5,14 +5,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.goncharoff.testapp.adapter.PhotosAdapter;
 import com.goncharoff.testapp.adapter.PostAdapter;
 import com.goncharoff.testapp.repository.UserRepository;
+
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -72,7 +77,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViewsContent() {
-        Glide.with(this).load(getProfileViewModel().getUserData().getPictureUrl()).into(avatar);
+        Glide.with(this).load(getProfileViewModel().getUserData().getPictureUrl())
+                .apply(RequestOptions.circleCropTransform())
+                .into(avatar);
+
         name.setText(getString(R.string.name, getProfileViewModel().getUserData().getName(), getProfileViewModel().getUserData().getLastName()));
         professionText.setText(getProfileViewModel().getUserData().getTitle());
         numberOfSubs.setText(String.valueOf(getProfileViewModel().getUserData().getNumber()));
@@ -90,5 +98,9 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager postsLayoutManager = new LinearLayoutManager(this);
         postsRecyclerView.setLayoutManager(postsLayoutManager);
         postsRecyclerView.setAdapter(new PostAdapter(this, UserRepository.getINSTANCE().getFilteredAndOrderedPosts()));
+
+        DividerItemDecoration itemDecorator = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        itemDecorator.setDrawable(Objects.requireNonNull(ContextCompat.getDrawable(this, R.drawable.posts_devider)));
+        postsRecyclerView.addItemDecoration(itemDecorator);
     }
 }

@@ -7,4 +7,6 @@
     <color name="professionNameColor">#6F6F6F</color>
     <color name="numberOfSubsColor">#0B0B0B</color>
     <color name="descriptionTextColor">#1A1A1A</color>
+    <color name="mailPhoneLinkColor">#157AA4</color>
+    <color name="postsTextColor">#6F6F6F</color>
 </resources>
