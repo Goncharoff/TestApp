@@ -1,6 +1,8 @@
 package com.goncharoff.testapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.goncharoff.testapp.R;
 import com.goncharoff.testapp.domain.Post;
+import com.goncharoff.testapp.domain.json_objects.post.ActionType;
 import com.goncharoff.testapp.domain.json_objects.post.PostAction;
 import com.goncharoff.testapp.domain.json_objects.post.PostJson;
 import com.goncharoff.testapp.domain.json_objects.post.PostQuote;
@@ -88,7 +91,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 PromotingItemViewHolder promotingItemViewHolder = (PromotingItemViewHolder) holder;
                 long promotingId = posts.get(position).getId();
                 PostAction postAction = UserRepository.getINSTANCE().getPostActionById(promotingId);
-                promotingItemViewHolder.bindView(postAction.getTitle(), postAction.getButtonName());
+                promotingItemViewHolder.bindView(postAction);
                 break;
         }
     }
@@ -111,7 +114,6 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             postImage = itemView.findViewById(R.id.postImage);
             postMessage = itemView.findViewById(R.id.postMessage);
 
-            Log.d("Init view - ", postDateCreated.toString() + " " + postImage.toString() + " " + postMessage.toString());
         }
 
         void bindView(long dateCreated, String imageUrl, String inputPostMessage) {
@@ -133,9 +135,24 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             promotingButton = itemView.findViewById(R.id.promotingButton);
         }
 
-        void bindView(String promMessage, String promAction) {
-            promotingMessage.setText(promMessage);
-            promotingButton.setText(promAction);
+        void bindView(PostAction postAction) {
+            promotingMessage.setText(postAction.getTitle());
+            promotingButton.setText(postAction.getButtonName());
+            if (postAction.getActionType() == ActionType.CALL) {
+                promotingButton.setOnClickListener(it -> {
+                    Log.d("ohmy", "its clicked");
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse(UserRepository.getINSTANCE().getUserData().getPhone()));
+                    context.startActivity(intent);
+                });
+            } else if (postAction.getActionType() == ActionType.EMAIL) {
+                promotingButton.setOnClickListener(it -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                            "mailto", "email@email.com", null));
+
+                    context.startActivity(Intent.createChooser(intent, "Choose an Email client :"));
+                });
+            }
         }
     }
 
