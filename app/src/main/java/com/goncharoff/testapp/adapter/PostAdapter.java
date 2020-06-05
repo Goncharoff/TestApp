@@ -79,15 +79,15 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         switch (holder.getItemViewType()) {
             case POST_CODE:
-                PostJson postJson = userRepository.getPostJsonDataById(postId);
+                PostJson postJson = userRepository.providePostJsonDataById(postId);
                 ((PostItemViewHolder) holder).bindView(posts.get(position).getDateCreated(), postJson);
                 break;
             case QUOTE_CODE:
-                PostQuote postQuote = userRepository.getPostQuoteById(postId);
+                PostQuote postQuote = userRepository.providePostQuoteById(postId);
                 ((QuoteItemViewHolder) holder).bindView(posts.get(position).getDateCreated(), postQuote.getFirstQuote(), postQuote.getSecondQuote());
                 break;
             case ACTION_CODE:
-                PostAction postAction = userRepository.getPostActionById(postId);
+                PostAction postAction = userRepository.providePostActionById(postId);
                 ((PromotingItemViewHolder) holder).bindView(postAction);
                 break;
         }
