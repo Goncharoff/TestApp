@@ -101,9 +101,8 @@ public class MainActivity extends AppCompatActivity {
     private void setUpPhoneNumberClick() {
         phoneNumber.setAutoLinkMask(Linkify.PHONE_NUMBERS);
         phoneNumber.setOnClickListener(it -> {
-            Intent intent = new Intent(Intent.ACTION_DIAL);
-            intent.setData(Uri.parse("tel:" + phoneNumber.getText()));
-            this.startActivity(intent);
+            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phoneNumber.getText().toString(), null));
+            this.startActivity(Intent.createChooser(intent, this.getString(R.string.app_to_call)));
         });
     }
 
