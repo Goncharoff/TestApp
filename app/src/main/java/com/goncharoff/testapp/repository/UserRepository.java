@@ -17,6 +17,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class UserRepository {
@@ -61,6 +62,7 @@ public class UserRepository {
     public List<Post> getFilteredAndOrderedPosts() {
         List<Post> input = Post.fromData(getPostData(), getPostData().getShowFromDate());
         Collections.sort(input);
+        //Collections.reverse(input);
 
         return input;
     }

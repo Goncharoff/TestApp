@@ -142,7 +142,6 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             promotingButton.setText(postAction.getButtonName());
             if (postAction.getActionType() == ActionType.CALL) {
                 promotingButton.setOnClickListener(it -> {
-                    Log.d("ohmy", "its clicked");
                     Intent intent = new Intent(Intent.ACTION_DIAL);
                     intent.setData(Uri.parse(UserRepository.getINSTANCE().getUserData().getPhone()));
                     context.startActivity(intent);
