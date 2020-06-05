@@ -47,14 +47,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initViews();
         initViewsContent();
-        UserRepository.getINSTANCE().getFilteredAndOrderedPosts();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
+    //lazy init view model
     private ProfileViewModel getProfileViewModel() {
         if (profileViewModel == null) {
             profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
@@ -81,6 +76,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViewsContent() {
+        setUpProfileViews();
+        setUpPhoneNumberClick();
+        setUpPhotosRecycler();
+        setUpPostsRecycler();
+    }
+
+    private void setUpProfileViews() {
+        //meh
         Glide.with(this).load(getProfileViewModel().getUserData().getPictureUrl())
                 .apply(RequestOptions.circleCropTransform())
                 .into(avatar);
@@ -93,18 +96,25 @@ public class MainActivity extends AppCompatActivity {
         email.setText(getProfileViewModel().getUserData().getEmail());
         subsNumber.setText(getProfileViewModel().getUserData().getFollowers());
         rating.setText(String.valueOf(getProfileViewModel().getUserData().getRating()));
+    }
 
+    private void setUpPhoneNumberClick() {
         phoneNumber.setAutoLinkMask(Linkify.PHONE_NUMBERS);
         phoneNumber.setOnClickListener(it -> {
             Intent intent = new Intent(Intent.ACTION_DIAL);
             intent.setData(Uri.parse("tel:" + phoneNumber.getText()));
             this.startActivity(intent);
         });
+    }
 
+    private void setUpPhotosRecycler() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         photosRecyclerView.setLayoutManager(layoutManager);
         photosRecyclerView.setAdapter(new PhotosAdapter(this, getProfileViewModel().getPostData().getPhotos()));
+    }
+
+    private void setUpPostsRecycler() {
 
         LinearLayoutManager postsLayoutManager = new LinearLayoutManager(this);
         postsRecyclerView.setLayoutManager(postsLayoutManager);
