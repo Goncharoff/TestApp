@@ -47,13 +47,13 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public int getItemViewType(int position) {
         switch (posts.get(position).getPostType()) {
             case POST:
-                return 1;
+                return POST_CODE;
             case QUOTE:
-                return 2;
+                return QUOTE_CODE;
             case ACTION:
-                return 3;
+                return ACTION_CODE;
             default:
-                throw new IllegalArgumentException("Can not find post type");
+                throw new IllegalArgumentException("Can not find post type with action = " + posts.get(position).getPostType());
         }
     }
 
@@ -63,17 +63,17 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         View view;
 
         switch (viewType) {
-            case 1:
-                view = LayoutInflater.from(context).inflate(R.layout.post_item, parent, false);
+            case POST_CODE:
+                view = inflateLayout(R.layout.post_item, parent);
                 return new PostItemViewHolder(view);
-            case 2:
-                view = LayoutInflater.from(context).inflate(R.layout.quote_item, parent, false);
+            case QUOTE_CODE:
+                view = inflateLayout(R.layout.quote_item, parent);
                 return new QuoteItemViewHolder(view);
-            case 3:
-                view = LayoutInflater.from(context).inflate(R.layout.promoting_item, parent, false);
+            case ACTION_CODE:
+                view = inflateLayout(R.layout.promoting_item, parent);
                 return new PromotingItemViewHolder(view);
             default:
-                throw new IllegalArgumentException("Error during binding layout item");
+                throw new IllegalArgumentException("Error during binding layout item for code " + viewType);
         }
 
     }
@@ -81,23 +81,17 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         switch (holder.getItemViewType()) {
-            case 1:
-                PostItemViewHolder viewHolder = (PostItemViewHolder) holder;
-                long postId = posts.get(position).getId();
-                PostJson postJson = UserRepository.getINSTANCE().getPostJsonDataById(postId);
-                viewHolder.bindView(posts.get(position).getDateCreated(), postJson.getImageUrl(), postJson.getText());
+            case POST_CODE:
+                PostJson postJson = userRepository.getPostJsonDataById(posts.get(position).getId());
+                ((PostItemViewHolder) holder).bindView(posts.get(position).getDateCreated(), postJson);
                 break;
-            case 2:
-                QuoteItemViewHolder quoteItemViewHolder = (QuoteItemViewHolder) holder;
-                long quoteId = posts.get(position).getId();
-                PostQuote postQuote = UserRepository.getINSTANCE().getPostQuoteById(quoteId);
-                quoteItemViewHolder.bindView(posts.get(position).getDateCreated(), postQuote.getFirstQuote(), postQuote.getSecondQuote());
+            case QUOTE_CODE:
+                PostQuote postQuote = userRepository.getPostQuoteById(posts.get(position).getId());
+                ((QuoteItemViewHolder) holder).bindView(posts.get(position).getDateCreated(), postQuote.getFirstQuote(), postQuote.getSecondQuote());
                 break;
-            case 3:
-                PromotingItemViewHolder promotingItemViewHolder = (PromotingItemViewHolder) holder;
-                long promotingId = posts.get(position).getId();
-                PostAction postAction = UserRepository.getINSTANCE().getPostActionById(promotingId);
-                promotingItemViewHolder.bindView(postAction);
+            case ACTION_CODE:
+                PostAction postAction = userRepository.getPostActionById(posts.get(position).getId());
+                ((PromotingItemViewHolder) holder).bindView(postAction);
                 break;
         }
     }
@@ -122,10 +116,10 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         }
 
-        void bindView(long dateCreated, String imageUrl, String inputPostMessage) {
+        void bindView(long dateCreated, PostJson postJson) {
             postDateCreated.setText(DateFormat.format("hh:mm, dd MMM yyyy", new Date(dateCreated)));
-            Glide.with(context).load(imageUrl).into(postImage);
-            postMessage.setText(inputPostMessage);
+            Glide.with(context).load(postJson.getImageUrl()).into(postImage);
+            postMessage.setText(postJson.getText());
         }
     }
 
