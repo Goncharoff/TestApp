@@ -25,6 +25,6 @@
       
  Time-tracking:
     architecture ~ 1h
-    back logic ~ 3h
+    back logic ~ 4h
     views ~ 12h
     refactoring ~ 1h
