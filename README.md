@@ -20,7 +20,8 @@
       6. View model useless
       7. Only portrait mode.
       8. Shapes should be replaced with cardview.
-      
+      9. Didn't sign certificate, should add pro-guard rules
+      10. Should replace some logic from MainActivity
       
  Time-tracking:
     architecture ~ 1h
