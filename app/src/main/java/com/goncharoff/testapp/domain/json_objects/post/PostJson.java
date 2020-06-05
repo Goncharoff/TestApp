@@ -2,12 +2,16 @@ package com.goncharoff.testapp.domain.json_objects.post;
 
 import com.google.gson.annotations.SerializedName;
 
-public class PostJson {
+import java.util.Objects;
+
+public class PostJson implements Dateable {
 
     private long id;
+    private String text;
+
     @SerializedName("image")
     private String imageUrl;
-    private String text;
+
     @SerializedName("date_created")
     private long dateCreated;
 
@@ -59,9 +63,9 @@ public class PostJson {
 
         if (id != post.id) return false;
         if (dateCreated != post.dateCreated) return false;
-        if (imageUrl != null ? !imageUrl.equals(post.imageUrl) : post.imageUrl != null)
+        if (!Objects.equals(imageUrl, post.imageUrl))
             return false;
-        return text != null ? text.equals(post.text) : post.text == null;
+        return Objects.equals(text, post.text);
     }
 
     @Override

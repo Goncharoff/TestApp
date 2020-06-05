@@ -1,11 +1,9 @@
-package com.goncharoff.testapp;
+package com.goncharoff.testapp.view;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
-import android.util.Patterns;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.goncharoff.testapp.R;
 import com.goncharoff.testapp.adapter.PhotosAdapter;
 import com.goncharoff.testapp.adapter.PostAdapter;
 import com.goncharoff.testapp.repository.UserRepository;

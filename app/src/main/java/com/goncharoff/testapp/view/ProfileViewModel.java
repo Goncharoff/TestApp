@@ -1,4 +1,4 @@
-package com.goncharoff.testapp;
+package com.goncharoff.testapp.view;
 
 import androidx.lifecycle.ViewModel;
 
