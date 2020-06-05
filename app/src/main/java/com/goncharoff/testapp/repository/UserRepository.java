@@ -62,7 +62,6 @@ public class UserRepository {
     public List<Post> getFilteredAndOrderedPosts() {
         List<Post> input = Post.fromData(getPostData(), getPostData().getShowFromDate());
         Collections.sort(input);
-        //Collections.reverse(input);
 
         return input;
     }

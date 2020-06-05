@@ -5,14 +5,17 @@ import android.content.Intent;
 import android.net.Uri;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -143,13 +146,13 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             if (postAction.getActionType() == ActionType.CALL) {
                 promotingButton.setOnClickListener(it -> {
                     Intent intent = new Intent(Intent.ACTION_DIAL);
-                    intent.setData(Uri.parse(UserRepository.getINSTANCE().getUserData().getPhone()));
+                    intent.setData(Uri.parse("tel:" + postAction.getTarget()));
                     context.startActivity(intent);
                 });
             } else if (postAction.getActionType() == ActionType.EMAIL) {
                 promotingButton.setOnClickListener(it -> {
                     Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                            "mailto", "email@email.com", null));
+                            "mailto", postAction.getTarget(), null));
 
                     context.startActivity(Intent.createChooser(intent, "Choose an Email client :"));
                 });
@@ -162,18 +165,39 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private TextView dateCreatedTextView;
         private TextView firstQuoteTextView;
         private TextView secondQuoteTextView;
+        private TextView thirdQuote;
+        private FrameLayout firstQuoteHolder;
+        private FrameLayout secondQuoteHolder;
+        private FrameLayout thirdQuoteHolder;
 
         public QuoteItemViewHolder(@NonNull View itemView) {
             super(itemView);
             dateCreatedTextView = itemView.findViewById(R.id.dateCreated);
             firstQuoteTextView = itemView.findViewById(R.id.firstQuote);
             secondQuoteTextView = itemView.findViewById(R.id.secondQuote);
+            firstQuoteHolder = itemView.findViewById(R.id.firstQuoteHolder);
+            secondQuoteHolder = itemView.findViewById(R.id.secondQuoteHolder);
+            thirdQuoteHolder = itemView.findViewById(R.id.thirdQuoteHolder);
+            thirdQuote = itemView.findViewById(R.id.thirdQuote);
         }
 
         void bindView(long dateCreated, String firstQuote, String secondQuote) {
             dateCreatedTextView.setText(DateFormat.format("hh:mm, dd MMM yyyy", new Date(dateCreated)));
-            firstQuoteTextView.setText(firstQuote);
-            secondQuoteTextView.setText(secondQuote);
+
+            if (firstQuote == null || firstQuote.equals("")) {
+                firstQuoteHolder.setVisibility(View.INVISIBLE);
+                secondQuoteHolder.setVisibility(View.INVISIBLE);
+                thirdQuoteHolder.setVisibility(View.VISIBLE);
+                thirdQuote.setText(secondQuote);
+            } else if (secondQuote == null || secondQuote.equals("")) {
+                firstQuoteHolder.setVisibility(View.INVISIBLE);
+                secondQuoteHolder.setVisibility(View.INVISIBLE);
+                thirdQuoteHolder.setVisibility(View.VISIBLE);
+                thirdQuote.setText(secondQuote);
+            } else {
+                firstQuoteTextView.setText(firstQuote);
+                secondQuoteTextView.setText(secondQuote);
+            }
         }
     }
 }
