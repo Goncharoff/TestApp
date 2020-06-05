@@ -29,8 +29,13 @@ import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private final static int POST_CODE = 1;
+    private final static int QUOTE_CODE = 2;
+    private final static int ACTION_CODE = 3;
+
     private Context context;
     private List<Post> posts;
+    private UserRepository userRepository = UserRepository.getINSTANCE();
 
     public PostAdapter(Context context, List<Post> posts) {
         this.context = context;
