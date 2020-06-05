@@ -51,7 +51,7 @@ public class Post implements Comparable<Post> {
 
     @Override
     public int compareTo(Post o) {
-        return this.dateCreated.compareTo(o.getDateCreated());
+        return -this.dateCreated.compareTo(o.getDateCreated());
     }
 
     public long getId() {

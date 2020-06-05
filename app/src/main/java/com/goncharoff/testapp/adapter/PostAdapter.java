@@ -1,24 +1,32 @@
 package com.goncharoff.testapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.goncharoff.testapp.R;
 import com.goncharoff.testapp.domain.Post;
+import com.goncharoff.testapp.domain.json_objects.post.ActionType;
 import com.goncharoff.testapp.domain.json_objects.post.PostAction;
 import com.goncharoff.testapp.domain.json_objects.post.PostJson;
 import com.goncharoff.testapp.domain.json_objects.post.PostQuote;
 import com.goncharoff.testapp.repository.UserRepository;
+
 
 import java.util.Date;
 import java.util.List;
@@ -88,7 +96,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 PromotingItemViewHolder promotingItemViewHolder = (PromotingItemViewHolder) holder;
                 long promotingId = posts.get(position).getId();
                 PostAction postAction = UserRepository.getINSTANCE().getPostActionById(promotingId);
-                promotingItemViewHolder.bindView(postAction.getTitle(), postAction.getButtonName());
+                promotingItemViewHolder.bindView(postAction);
                 break;
         }
     }
@@ -111,11 +119,10 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             postImage = itemView.findViewById(R.id.postImage);
             postMessage = itemView.findViewById(R.id.postMessage);
 
-            Log.d("Init view - ", postDateCreated.toString() + " " + postImage.toString() + " " + postMessage.toString());
         }
 
         void bindView(long dateCreated, String imageUrl, String inputPostMessage) {
-            postDateCreated.setText(new Date(dateCreated).toString());
+            postDateCreated.setText(DateFormat.format("hh:mm, dd MMM yyyy", new Date(dateCreated)));
             Glide.with(context).load(imageUrl).into(postImage);
             postMessage.setText(inputPostMessage);
         }
@@ -133,9 +140,23 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             promotingButton = itemView.findViewById(R.id.promotingButton);
         }
 
-        void bindView(String promMessage, String promAction) {
-            promotingMessage.setText(promMessage);
-            promotingButton.setText(promAction);
+        void bindView(PostAction postAction) {
+            promotingMessage.setText(postAction.getTitle());
+            promotingButton.setText(postAction.getButtonName());
+            if (postAction.getActionType() == ActionType.CALL) {
+                promotingButton.setOnClickListener(it -> {
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel:" + postAction.getTarget()));
+                    context.startActivity(intent);
+                });
+            } else if (postAction.getActionType() == ActionType.EMAIL) {
+                promotingButton.setOnClickListener(it -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                            "mailto", postAction.getTarget(), null));
+
+                    context.startActivity(Intent.createChooser(intent, "Choose an Email client :"));
+                });
+            }
         }
     }
 
@@ -144,18 +165,39 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private TextView dateCreatedTextView;
         private TextView firstQuoteTextView;
         private TextView secondQuoteTextView;
+        private TextView thirdQuote;
+        private FrameLayout firstQuoteHolder;
+        private FrameLayout secondQuoteHolder;
+        private FrameLayout thirdQuoteHolder;
 
         public QuoteItemViewHolder(@NonNull View itemView) {
             super(itemView);
             dateCreatedTextView = itemView.findViewById(R.id.dateCreated);
             firstQuoteTextView = itemView.findViewById(R.id.firstQuote);
             secondQuoteTextView = itemView.findViewById(R.id.secondQuote);
+            firstQuoteHolder = itemView.findViewById(R.id.firstQuoteHolder);
+            secondQuoteHolder = itemView.findViewById(R.id.secondQuoteHolder);
+            thirdQuoteHolder = itemView.findViewById(R.id.thirdQuoteHolder);
+            thirdQuote = itemView.findViewById(R.id.thirdQuote);
         }
 
         void bindView(long dateCreated, String firstQuote, String secondQuote) {
-            dateCreatedTextView.setText(new Date(dateCreated).toString());
-            firstQuoteTextView.setText(firstQuote);
-            secondQuoteTextView.setText(secondQuote);
+            dateCreatedTextView.setText(DateFormat.format("hh:mm, dd MMM yyyy", new Date(dateCreated)));
+
+            if (firstQuote == null || firstQuote.equals("")) {
+                firstQuoteHolder.setVisibility(View.INVISIBLE);
+                secondQuoteHolder.setVisibility(View.INVISIBLE);
+                thirdQuoteHolder.setVisibility(View.VISIBLE);
+                thirdQuote.setText(secondQuote);
+            } else if (secondQuote == null || secondQuote.equals("")) {
+                firstQuoteHolder.setVisibility(View.INVISIBLE);
+                secondQuoteHolder.setVisibility(View.INVISIBLE);
+                thirdQuoteHolder.setVisibility(View.VISIBLE);
+                thirdQuote.setText(secondQuote);
+            } else {
+                firstQuoteTextView.setText(firstQuote);
+                secondQuoteTextView.setText(secondQuote);
+            }
         }
     }
 }
