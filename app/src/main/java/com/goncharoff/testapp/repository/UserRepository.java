@@ -2,11 +2,13 @@ package com.goncharoff.testapp.repository;
 
 import android.content.Context;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RawRes;
 
 import com.goncharoff.testapp.R;
 import com.goncharoff.testapp.domain.Post;
 import com.goncharoff.testapp.domain.json_objects.User;
+import com.goncharoff.testapp.domain.json_objects.post.Dateable;
 import com.goncharoff.testapp.domain.json_objects.post.PostAction;
 import com.goncharoff.testapp.domain.json_objects.post.PostData;
 import com.goncharoff.testapp.domain.json_objects.post.PostJson;
@@ -17,7 +19,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class UserRepository {
@@ -27,7 +28,7 @@ public class UserRepository {
     private static UserRepository INSTANCE = null;
     private Context context;
 
-    public UserRepository(Context context) {
+    private UserRepository(Context context) {
         this.context = context;
     }
 
@@ -38,7 +39,7 @@ public class UserRepository {
     }
 
     public static UserRepository getINSTANCE() {
-        if (INSTANCE == null) throw new IllegalStateException("User must not be null");
+        if (INSTANCE == null) throw new IllegalStateException("Repository must not be null");
 
         return INSTANCE;
     }
@@ -60,37 +61,32 @@ public class UserRepository {
     }
 
     public List<Post> getFilteredAndOrderedPosts() {
-        List<Post> input = Post.fromData(getPostData(), getPostData().getShowFromDate());
+        PostData postData = getPostData();
+        List<Post> input = Post.fromData(postData, postData.getShowFromDate());
         Collections.sort(input);
 
         return input;
     }
 
-    public PostJson getPostJsonDataById(long id) {
-
-        for (int i = 0; i < getPostData().getPosts().size(); i++) {
-            if (getPostData().getPosts().get(i).getId() == id)
-                return getPostData().getPosts().get(i);
-        }
-
-
-        return null;
+    public PostJson providePostJsonDataById(long id) {
+        return getDateableDataById(id, getPostData().getPosts());
     }
 
-    public PostAction getPostActionById(long id) {
-        for (int i = 0; i < getPostData().getPostActions().size(); i++) {
-            if (getPostData().getPostActions().get(i).getId() == id)
-                return getPostData().getPostActions().get(i);
-        }
-
-        return null;
+    public PostAction providePostActionById(long id) {
+        return getDateableDataById(id, getPostData().getPostActions());
     }
 
 
-    public PostQuote getPostQuoteById(long id) {
-        for (int i = 0; i < getPostData().getPostQuotes().size(); i++) {
-            if (getPostData().getPostQuotes().get(i).getId() == id)
-                return getPostData().getPostQuotes().get(i);
+    public PostQuote providePostQuoteById(long id) {
+        return getDateableDataById(id, getPostData().getPostQuotes());
+    }
+
+    @Nullable
+    private <T extends Dateable> T getDateableDataById(long id, List<T> collectionToSearch) {
+        for (int i = 0; i < collectionToSearch.size(); i++) {
+            if (collectionToSearch.get(i).getId() == id) {
+                return collectionToSearch.get(i);
+            }
         }
 
         return null;

@@ -2,12 +2,18 @@ package com.goncharoff.testapp.domain.json_objects.post;
 
 import com.google.gson.annotations.SerializedName;
 
-public class PostQuote {
+import java.util.Objects;
+
+public class PostQuote implements Dateable {
+
     private long id;
+
     @SerializedName("quote_1")
     private String firstQuote;
+
     @SerializedName("quote_2")
     private String secondQuote;
+
     @SerializedName("date_created")
     private long dateCreated;
 
@@ -52,9 +58,9 @@ public class PostQuote {
 
         if (id != postQuote.id) return false;
         if (dateCreated != postQuote.dateCreated) return false;
-        if (firstQuote != null ? !firstQuote.equals(postQuote.firstQuote) : postQuote.firstQuote != null)
+        if (!Objects.equals(firstQuote, postQuote.firstQuote))
             return false;
-        return secondQuote != null ? secondQuote.equals(postQuote.secondQuote) : postQuote.secondQuote == null;
+        return Objects.equals(secondQuote, postQuote.secondQuote);
     }
 
     @Override

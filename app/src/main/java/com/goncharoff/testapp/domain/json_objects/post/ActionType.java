@@ -6,6 +6,5 @@ public enum ActionType {
     @SerializedName("email")
     EMAIL,
     @SerializedName("phone")
-    CALL;
-
+    CALL
 }

@@ -2,15 +2,20 @@ package com.goncharoff.testapp.domain.json_objects.post;
 
 import com.google.gson.annotations.SerializedName;
 
-public class PostAction {
+import java.util.Objects;
+
+public class PostAction implements Dateable {
 
     private long id;
     private String title;
+    private String target;
+
     @SerializedName("btn_name")
     private String buttonName;
+
     @SerializedName("action_type")
     private ActionType actionType;
-    private String target;
+
     @SerializedName("date_created")
     private long dateCreated;
 
@@ -71,11 +76,11 @@ public class PostAction {
 
         if (id != that.id) return false;
         if (dateCreated != that.dateCreated) return false;
-        if (title != null ? !title.equals(that.title) : that.title != null) return false;
-        if (buttonName != null ? !buttonName.equals(that.buttonName) : that.buttonName != null)
+        if (!Objects.equals(title, that.title)) return false;
+        if (!Objects.equals(buttonName, that.buttonName))
             return false;
         if (actionType != that.actionType) return false;
-        return target != null ? target.equals(that.target) : that.target == null;
+        return Objects.equals(target, that.target);
     }
 
     @Override
@@ -87,5 +92,17 @@ public class PostAction {
         result = 31 * result + (target != null ? target.hashCode() : 0);
         result = 31 * result + (int) (dateCreated ^ (dateCreated >>> 32));
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "PostAction{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", target='" + target + '\'' +
+                ", buttonName='" + buttonName + '\'' +
+                ", actionType=" + actionType +
+                ", dateCreated=" + dateCreated +
+                '}';
     }
 }

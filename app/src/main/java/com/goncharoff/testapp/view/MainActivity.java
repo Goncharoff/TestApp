@@ -1,11 +1,9 @@
-package com.goncharoff.testapp;
+package com.goncharoff.testapp.view;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
-import android.util.Patterns;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.goncharoff.testapp.R;
 import com.goncharoff.testapp.adapter.PhotosAdapter;
 import com.goncharoff.testapp.adapter.PostAdapter;
 import com.goncharoff.testapp.repository.UserRepository;
@@ -48,14 +47,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initViews();
         initViewsContent();
-        UserRepository.getINSTANCE().getFilteredAndOrderedPosts();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
+    //lazy init view model
     private ProfileViewModel getProfileViewModel() {
         if (profileViewModel == null) {
             profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
@@ -82,6 +76,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViewsContent() {
+        setUpProfileViews();
+        setUpPhoneNumberClick();
+        setUpPhotosRecycler();
+        setUpPostsRecycler();
+    }
+
+    private void setUpProfileViews() {
+        //meh
         Glide.with(this).load(getProfileViewModel().getUserData().getPictureUrl())
                 .apply(RequestOptions.circleCropTransform())
                 .into(avatar);
@@ -94,18 +96,24 @@ public class MainActivity extends AppCompatActivity {
         email.setText(getProfileViewModel().getUserData().getEmail());
         subsNumber.setText(getProfileViewModel().getUserData().getFollowers());
         rating.setText(String.valueOf(getProfileViewModel().getUserData().getRating()));
+    }
 
+    private void setUpPhoneNumberClick() {
         phoneNumber.setAutoLinkMask(Linkify.PHONE_NUMBERS);
         phoneNumber.setOnClickListener(it -> {
-            Intent intent = new Intent(Intent.ACTION_DIAL);
-            intent.setData(Uri.parse("tel:" + phoneNumber.getText()));
-            this.startActivity(intent);
+            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phoneNumber.getText().toString(), null));
+            this.startActivity(Intent.createChooser(intent, this.getString(R.string.app_to_call)));
         });
+    }
 
+    private void setUpPhotosRecycler() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         photosRecyclerView.setLayoutManager(layoutManager);
         photosRecyclerView.setAdapter(new PhotosAdapter(this, getProfileViewModel().getPostData().getPhotos()));
+    }
+
+    private void setUpPostsRecycler() {
 
         LinearLayoutManager postsLayoutManager = new LinearLayoutManager(this);
         postsRecyclerView.setLayoutManager(postsLayoutManager);
