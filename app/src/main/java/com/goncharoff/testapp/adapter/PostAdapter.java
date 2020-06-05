@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,6 +33,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final static int POST_CODE = 1;
     private final static int QUOTE_CODE = 2;
     private final static int ACTION_CODE = 3;
+    public static final String DATE_FORMAT_PATTERN = "hh:mm, dd MMM yyyy";
 
     private Context context;
     private List<Post> posts;
@@ -80,17 +82,19 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        long postId = posts.get(position).getId();
+
         switch (holder.getItemViewType()) {
             case POST_CODE:
-                PostJson postJson = userRepository.getPostJsonDataById(posts.get(position).getId());
+                PostJson postJson = userRepository.getPostJsonDataById(postId);
                 ((PostItemViewHolder) holder).bindView(posts.get(position).getDateCreated(), postJson);
                 break;
             case QUOTE_CODE:
-                PostQuote postQuote = userRepository.getPostQuoteById(posts.get(position).getId());
+                PostQuote postQuote = userRepository.getPostQuoteById(postId);
                 ((QuoteItemViewHolder) holder).bindView(posts.get(position).getDateCreated(), postQuote.getFirstQuote(), postQuote.getSecondQuote());
                 break;
             case ACTION_CODE:
-                PostAction postAction = userRepository.getPostActionById(posts.get(position).getId());
+                PostAction postAction = userRepository.getPostActionById(postId);
                 ((PromotingItemViewHolder) holder).bindView(postAction);
                 break;
         }
@@ -99,6 +103,10 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemCount() {
         return posts.size();
+    }
+
+    private View inflateLayout(@LayoutRes int layoutRes, ViewGroup parent) {
+        return LayoutInflater.from(context).inflate(layoutRes, parent, false);
     }
 
     class PostItemViewHolder extends RecyclerView.ViewHolder {
@@ -117,7 +125,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
         void bindView(long dateCreated, PostJson postJson) {
-            postDateCreated.setText(DateFormat.format("hh:mm, dd MMM yyyy", new Date(dateCreated)));
+            postDateCreated.setText(DateFormat.format(DATE_FORMAT_PATTERN, new Date(dateCreated)));
             Glide.with(context).load(postJson.getImageUrl()).into(postImage);
             postMessage.setText(postJson.getText());
         }
@@ -138,22 +146,30 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         void bindView(PostAction postAction) {
             promotingMessage.setText(postAction.getTitle());
             promotingButton.setText(postAction.getButtonName());
-            if (postAction.getActionType() == ActionType.CALL) {
-                promotingButton.setOnClickListener(it -> {
-                    Intent intent = new Intent(Intent.ACTION_DIAL);
-                    intent.setData(Uri.parse("tel:" + postAction.getTarget()));
-                    context.startActivity(intent);
-                });
-            } else if (postAction.getActionType() == ActionType.EMAIL) {
-                promotingButton.setOnClickListener(it -> {
-                    Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                            "mailto", postAction.getTarget(), null));
+            setUpButtOnClickListnerByActionType(postAction.getActionType(), postAction.getTarget());
+        }
 
-                    context.startActivity(Intent.createChooser(intent, "Choose an Email client :"));
-                });
+        private void setUpButtOnClickListnerByActionType(ActionType actionType, String target) {
+            if (actionType == ActionType.CALL) {
+                promotingButton.setOnClickListener(it -> bindPromotingButtonToCall(target));
+            } else if (actionType == ActionType.EMAIL) {
+                promotingButton.setOnClickListener(it -> bindPromotingButtonToEmail(target));
             }
         }
+
+        private void bindPromotingButtonToCall(String target) {
+            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", target, null));
+            context.startActivity(Intent.createChooser(intent, context.getString(R.string.app_to_call)));
+        }
+
+        private void bindPromotingButtonToEmail(String target) {
+            Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                    "mailto", target, null));
+
+            context.startActivity(Intent.createChooser(intent, context.getString(R.string.app_to_email)));
+        }
     }
+
 
     class QuoteItemViewHolder extends RecyclerView.ViewHolder {
 
@@ -177,22 +193,29 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
         void bindView(long dateCreated, String firstQuote, String secondQuote) {
-            dateCreatedTextView.setText(DateFormat.format("hh:mm, dd MMM yyyy", new Date(dateCreated)));
 
+            dateCreatedTextView.setText(DateFormat.format(DATE_FORMAT_PATTERN, new Date(dateCreated)));
+
+            /**if one of qoutes is "" or null - make the two of them invisible and make third one visible with
+             text of quote which is present;
+             **/
             if (firstQuote == null || firstQuote.equals("")) {
-                firstQuoteHolder.setVisibility(View.INVISIBLE);
-                secondQuoteHolder.setVisibility(View.INVISIBLE);
-                thirdQuoteHolder.setVisibility(View.VISIBLE);
-                thirdQuote.setText(secondQuote);
+                switchQuotesViews(secondQuote);
             } else if (secondQuote == null || secondQuote.equals("")) {
-                firstQuoteHolder.setVisibility(View.INVISIBLE);
-                secondQuoteHolder.setVisibility(View.INVISIBLE);
-                thirdQuoteHolder.setVisibility(View.VISIBLE);
-                thirdQuote.setText(secondQuote);
+                switchQuotesViews(firstQuote);
             } else {
                 firstQuoteTextView.setText(firstQuote);
                 secondQuoteTextView.setText(secondQuote);
             }
         }
+
+        private void switchQuotesViews(String quoteText) {
+            firstQuoteHolder.setVisibility(View.INVISIBLE);
+            secondQuoteHolder.setVisibility(View.INVISIBLE);
+            thirdQuoteHolder.setVisibility(View.VISIBLE);
+            thirdQuote.setText(quoteText);
+        }
     }
+
+
 }

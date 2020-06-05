@@ -7,4 +7,6 @@
 
     <string name="name">%1$s %2$s</string>
     <string name="posts">Posts</string>
+    <string name="app_to_call">Choose app to call :</string>
+    <string name="app_to_email">Choose an Email client :</string>
 </resources>
