@@ -1,6 +1,11 @@
 package com.goncharoff.testapp;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
+import android.util.Patterns;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -89,6 +94,13 @@ public class MainActivity extends AppCompatActivity {
         email.setText(getProfileViewModel().getUserData().getEmail());
         subsNumber.setText(getProfileViewModel().getUserData().getFollowers());
         rating.setText(String.valueOf(getProfileViewModel().getUserData().getRating()));
+
+        phoneNumber.setAutoLinkMask(Linkify.PHONE_NUMBERS);
+        phoneNumber.setOnClickListener(it -> {
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:" + phoneNumber.getText()));
+            this.startActivity(intent);
+        });
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
